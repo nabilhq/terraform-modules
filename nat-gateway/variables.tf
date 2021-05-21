@@ -21,6 +21,7 @@ data "aws_ami_ids" "nat_gateway" {
     values = ["hvm"]
   }
 }
+
 variable vpc_id {
   type        = string
   description = "id of the vpc to deploy in"
