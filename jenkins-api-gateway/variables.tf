@@ -29,16 +29,16 @@ variable api_gw_stage_name {
 }
 
 variable priv_subnet_a_id {
-  type = string
+  type        = string
   description = "id of the primary private subnet"
 }
 
 variable priv_subnet_b_id {
-  type = string
+  type        = string
   description = "id of the secondary private subnet"
 }
 
 variable github_webhook_forwarder_lambda_package_path {
-  type = string
+  type        = string
   description = "path to the lambda package"
 }
