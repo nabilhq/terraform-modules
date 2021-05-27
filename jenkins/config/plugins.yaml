@@ -1,0 +1,262 @@
+plugins:
+  - artifactId: pipeline-milestone-step
+    source:
+      version: latest
+  - artifactId: workflow-basic-steps
+    source:
+      version: latest
+  - artifactId: workflow-aggregator
+    source:
+      version: latest
+  - artifactId: configuration-as-code
+    source:
+      version: latest
+  - artifactId: momentjs
+    source:
+      version: latest
+  - artifactId: workflow-scm-step
+    source:
+      version: latest
+  - artifactId: junit
+    source:
+      version: latest
+  - artifactId: apache-httpcomponents-client-4-api
+    source:
+      version: latest
+  - artifactId: pipeline-stage-step
+    source:
+      version: latest
+  - artifactId: script-security
+    source:
+      version: latest
+  - artifactId: javadoc
+    source:
+      version: latest
+  - artifactId: plain-credentials
+    source:
+      version: latest
+  - artifactId: saml
+    source:
+      version: latest
+  - artifactId: jquery3-api
+    source:
+      version: latest
+  - artifactId: matrix-auth
+    source:
+      version: latest
+  - artifactId: mailer
+    source:
+      version: latest
+  - artifactId: slack
+    source:
+      version: latest
+  - artifactId: plugin-util-api
+    source:
+      version: latest
+  - artifactId: cloudbees-folder
+    source:
+      version: latest
+  - artifactId: workflow-support
+    source:
+      version: latest
+  - artifactId: global-slack-notifier
+    source:
+      version: latest
+  - artifactId: configuration-as-code-secret-ssm
+    source:
+      version: latest
+  - artifactId: jackson2-api
+    source:
+      version: latest
+  - artifactId: ace-editor
+    source:
+      version: latest
+  - artifactId: pipeline-build-step
+    source:
+      version: latest
+  - artifactId: pipeline-input-step
+    source:
+      version: latest
+  - artifactId: jdk-tool
+    source:
+      version: latest
+  - artifactId: workflow-cps-global-lib
+    source:
+      version: latest
+  - artifactId: copyartifact
+    source:
+      version: latest
+  - artifactId: handlebars
+    source:
+      version: latest
+  - artifactId: pipeline-rest-api
+    source:
+      version: latest
+  - artifactId: git-server
+    source:
+      version: latest
+  - artifactId: git
+    source:
+      version: latest
+  - artifactId: github-branch-source
+    source:
+      version: latest
+  - artifactId: groovy
+    source:
+      version: latest
+  - artifactId: pipeline-model-definition
+    source:
+      version: latest
+  - artifactId: checks-api
+    source:
+      version: latest
+  - artifactId: github-api
+    source:
+      version: latest
+  - artifactId: command-launcher
+    source:
+      version: latest
+  - artifactId: pipeline-model-extensions
+    source:
+      version: latest
+  - artifactId: aws-secrets-manager-credentials-provider
+    source:
+      version: latest
+  - artifactId: matrix-project
+    source:
+      version: latest
+  - artifactId: lockable-resources
+    source:
+      version: latest
+  - artifactId: durable-task
+    source:
+      version: latest
+  - artifactId: pipeline-graph-analysis
+    source:
+      version: latest
+  - artifactId: aws-credentials
+    source:
+      version: latest
+  - artifactId: git-client
+    source:
+      version: latest
+  - artifactId: github
+    source:
+      version: latest
+  - artifactId: workflow-multibranch
+    source:
+      version: latest
+  - artifactId: validating-string-parameter
+    source:
+      version: latest
+  - artifactId: mask-passwords
+    source:
+      version: latest
+  - artifactId: jjwt-api
+    source:
+      version: latest
+  - artifactId: pipeline-model-api
+    source:
+      version: latest
+  - artifactId: popper-api
+    source:
+      version: latest
+  - artifactId: workflow-durable-task-step
+    source:
+      version: latest
+  - artifactId: echarts-api
+    source:
+      version: latest
+  - artifactId: credentials
+    source:
+      version: latest
+  - artifactId: token-macro
+    source:
+      version: latest
+  - artifactId: ssh-credentials
+    source:
+      version: latest
+  - artifactId: workflow-job
+    source:
+      version: latest
+  - artifactId: parameterized-scheduler
+    source:
+      version: latest
+  - artifactId: branch-api
+    source:
+      version: latest
+  - artifactId: workflow-api
+    source:
+      version: latest
+  - artifactId: workflow-cps
+    source:
+      version: latest
+  - artifactId: pipeline-stage-tags-metadata
+    source:
+      version: latest
+  - artifactId: Parameterized-Remote-Trigger
+    source:
+      version: latest
+  - artifactId: font-awesome-api
+    source:
+      version: latest
+  - artifactId: variant
+    source:
+      version: latest
+  - artifactId: bouncycastle-api
+    source:
+      version: latest
+  - artifactId: aws-java-sdk
+    source:
+      version: latest
+  - artifactId: credentials-binding
+    source:
+      version: latest
+  - artifactId: structs
+    source:
+      version: latest
+  - artifactId: display-url-api
+    source:
+      version: latest
+  - artifactId: okhttp-api
+    source:
+      version: latest
+  - artifactId: bootstrap4-api
+    source:
+      version: latest
+  - artifactId: workflow-step-api
+    source:
+      version: latest
+  - artifactId: trilead-api
+    source:
+      version: latest
+  - artifactId: role-strategy
+    source:
+      version: latest
+  - artifactId: rebuild
+    source:
+      version: latest
+  - artifactId: s3
+    source:
+      version: latest
+  - artifactId: jsch
+    source:
+      version: latest
+  - artifactId: maven-plugin
+    source:
+      version: latest
+  - artifactId: snakeyaml-api
+    source:
+      version: latest
+  - artifactId: pipeline-stage-view
+    source:
+      version: latest
+  - artifactId: scm-api
+    source:
+      version: latest
+  - artifactId: build-with-parameters
+    source:
+      version: latest
+  - artifactId: job-dsl
+    source:
+      version: latest
