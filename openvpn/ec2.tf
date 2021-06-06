@@ -14,7 +14,7 @@ resource "aws_instance" "ec2" {
   ami                         = data.aws_ami_ids.openvpn.ids[0]
   instance_type               = var.ec2_instance_type
   key_name                    = aws_key_pair.ec2.key_name
-  subnet_id                   = var.priv_subnet_a_id
+  subnet_id                   = var.pub_subnet_a_id
   vpc_security_group_ids      = [aws_security_group.ec2.id]
   associate_public_ip_address = true
 
@@ -36,7 +36,7 @@ admin_user=${var.openvpn_admin_username}
 admin_pw=${var.openvpn_admin_password}
 USERDATA
 
-  provisioner "remote-exec" {
+  /*provisioner "remote-exec" {
     connection {
       user        = "openvpnas"
       host        = self.public_ip
@@ -59,5 +59,5 @@ USERDATA
       "sudo /usr/local/openvpn_as/scripts/sacli --key \"vpn.server.port_share.enable\" --value \"true\" ConfigPut",
       "sudo /usr/local/openvpn_as/scripts/sacli start"
     ]
-  }
+  }*/
 }

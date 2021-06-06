@@ -16,7 +16,7 @@ resource "aws_security_group_rule" "ec2_in_22" {
   from_port         = 22
   to_port           = 22
   protocol          = "tcp"
-  cidr_blocks       = ["${var.source_ip}/32"]
+  cidr_blocks       = [var.source_ip]
   security_group_id = aws_security_group.ec2.id
 }
 
@@ -34,7 +34,7 @@ resource "aws_security_group_rule" "ec2_in_443_vpn" {
   from_port         = 443
   to_port           = 443
   protocol          = "tcp"
-  cidr_blocks       = ["${var.source_ip}/32"]
+  cidr_blocks       = [var.source_ip]
   security_group_id = aws_security_group.ec2.id
 }
 
@@ -65,7 +65,7 @@ resource "aws_security_group_rule" "lb_in_443" {
   from_port         = 443
   to_port           = 443
   protocol          = "tcp"
-  cidr_blocks       = ["${var.source_ip}/32"]
+  cidr_blocks       = [var.source_ip]
   security_group_id = aws_security_group.lb.id
 }
 

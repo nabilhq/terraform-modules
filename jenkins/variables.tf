@@ -141,17 +141,17 @@ variable github_account {
 }
 
 variable jenkins_yaml_config_path {
-  type = string
+  type        = string
   description = "path to the jenkins.yaml config file"
 }
 
 variable jenkins_init_groovy_path {
-  type = string
+  type        = string
   description = "path to the init groovy directory"
 }
 
 variable jenkins_plugins_yaml_path {
-  type = string
+  type        = string
   description = "path to the plugins.yaml file"
 }
 

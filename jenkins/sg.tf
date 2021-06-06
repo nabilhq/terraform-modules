@@ -29,15 +29,6 @@ resource "aws_security_group_rule" "ec2_in_22" {
   security_group_id = aws_security_group.ec2.id
 }
 
-resource "aws_security_group_rule" "ec2_in_wild" {
-  type              = "ingress"
-  from_port         = 0
-  to_port           = 0
-  protocol          = "-1"
-  cidr_blocks       = [var.ssh_source]
-  security_group_id = aws_security_group.ec2.id
-}
-
 resource "aws_security_group_rule" "ec2_in_8080_lb" {
   type                     = "ingress"
   from_port                = 8080
@@ -64,7 +55,7 @@ resource "aws_security_group_rule" "lb_in_443" {
   type              = "ingress"
   from_port         = 443
   to_port           = 443
-  protocol          = "-1"
+  protocol          = -1
   cidr_blocks       = [var.web_source]
   security_group_id = aws_security_group.lb.id
 }

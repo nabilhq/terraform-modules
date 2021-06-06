@@ -12,10 +12,10 @@ resource "aws_security_group" "github_webhook_forwarder" {
 }
 
 resource "aws_security_group_rule" "github_webhook_forwarder_egress_wildcard" {
-  type              = "egress"
-  from_port         = 443
-  to_port           = 443
-  protocol          = "-1"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.github_webhook_forwarder.id
+  type                     = "egress"
+  from_port                = 443
+  to_port                  = 443
+  protocol                 = -1
+  source_security_group_id = var.jenkins_source_sg_id
+  security_group_id        = aws_security_group.github_webhook_forwarder.id
 }

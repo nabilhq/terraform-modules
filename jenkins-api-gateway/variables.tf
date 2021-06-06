@@ -42,3 +42,8 @@ variable github_webhook_forwarder_lambda_package_path {
   type        = string
   description = "path to the lambda package"
 }
+
+variable jenkins_source_sg_id {
+  type        = string
+  description = "jenkins security group id"
+}
