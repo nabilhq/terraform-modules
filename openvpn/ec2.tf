@@ -35,29 +35,4 @@ resource "aws_instance" "ec2" {
 admin_user=${var.openvpn_admin_username}
 admin_pw=${var.openvpn_admin_password}
 USERDATA
-
-  /*provisioner "remote-exec" {
-    connection {
-      user        = "openvpnas"
-      host        = self.public_ip
-      private_key = file(var.ec2_private_key)
-      timeout     = "10m"
-    }
-
-    inline = [
-      "sleep 300",
-      "sudo /usr/local/openvpn_as/scripts/sacli --key \"auth.module.type\" --value \"radius\" ConfigPut",
-      "sudo /usr/local/openvpn_as/scripts/sacli --key \"auth.radius.0.acct_enable\" --value \"true\" ConfigPut",
-      "sudo /usr/local/openvpn_as/scripts/sacli --key \"auth.radius.0.server.0.host\" --value \"radius.us.onelogin.com\" ConfigPut",
-      "sudo /usr/local/openvpn_as/scripts/sacli --key \"auth.radius.0.server.0.secret\" --value \"${var.openvpn_radius_shared_secret}\" ConfigPut",
-      "sudo /usr/local/openvpn_as/scripts/sacli --key \"auth.radius.0.auth_method\" --value \"pap\" ConfigPut",
-      "sudo /usr/local/openvpn_as/scripts/sacli --key \"auth.radius.0.name\" --value \"onelogin\" ConfigPut",
-      "sudo /usr/local/openvpn_as/scripts/sacli --key \"auth.radius.0.server.0.acct_port\" --value \"1813\" ConfigPut",
-      "sudo /usr/local/openvpn_as/scripts/sacli --key \"auth.radius.0.server.0.auth_port\" --value \"1812\" ConfigPut",
-      "sudo /usr/local/openvpn_as/scripts/sacli --key \"vpn.server.daemon.enable\" --value \"false\" ConfigPut",
-      "sudo /usr/local/openvpn_as/scripts/sacli --key \"vpn.daemon.0.listen.protocol\" --value \"tcp\" ConfigPut",
-      "sudo /usr/local/openvpn_as/scripts/sacli --key \"vpn.server.port_share.enable\" --value \"true\" ConfigPut",
-      "sudo /usr/local/openvpn_as/scripts/sacli start"
-    ]
-  }*/
 }
