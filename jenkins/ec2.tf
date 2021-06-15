@@ -111,8 +111,7 @@ resource "null_resource" "ec2" {
       "echo CHANGING PERMISSIONS - jenkins.yaml",
       "sudo chown jenkins:jenkins /var/lib/jenkins/jenkins.yaml",
       "echo RESTARTING SERVICE - jenkins",
-      "sudo service jenkins stop",
-      "sudo service jenkins start",
+      "sudo service jenkins restart",
       "echo CLEANING UP",
       "rm -rf /home/ubuntu/init.groovy",
       "rm -rf /home/ubuntu/plugins.yaml"

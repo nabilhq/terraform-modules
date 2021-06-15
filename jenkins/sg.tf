@@ -25,7 +25,7 @@ resource "aws_security_group_rule" "ec2_in_22" {
   from_port         = 22
   to_port           = 22
   protocol          = "tcp"
-  cidr_blocks       = [var.ssh_source]
+  cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = aws_security_group.ec2.id
 }
 
