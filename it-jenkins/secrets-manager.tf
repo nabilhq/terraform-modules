@@ -54,6 +54,37 @@ SECRET
 }
 
 resource "aws_secretsmanager_secret" "jenkins_yaml_config_params_staging" {
+  name                    = "${var.service_name}-jenkins-yaml-config-params-staging"
+  description             = "${var.service_name} jenkins.yaml config param values"
+  recovery_window_in_days = 0
+
+  tags = {
+    Name        = "${var.service_name}-jenkins-yaml-config-params-staging"
+    Service     = var.service_name
+    Environment = "prod"
+    Terraform   = true
+  }
+}
+
+resource "aws_secretsmanager_secret_version" "jenkins_yaml_config_params_staging" {
+  secret_id = aws_secretsmanager_secret.jenkins_yaml_config_params_staging.id
+
+  secret_string = <<SECRET
+{
+  "hostname": "${var.service_name}-staging",
+  "serviceName": "${var.service_name}",
+  "domain": "${var.domain}",
+  "adminUsername":"${var.admin_username}",
+  "adminEmail":"${var.admin_email}",
+  "gitAccount":"${var.github_account}",
+  "gitRepo":"${var.github_repo}",
+  "gitBranch":"${var.github_branch_staging}",
+  "awsRegion":"${var.aws_region}"
+}
+SECRET
+}
+
+resource "aws_secretsmanager_secret" "jenkins_yaml_config_params_staging" {
   name                    = "${var.service_name}-jenkins-yaml-config-params-prod"
   description             = "${var.service_name} jenkins.yaml config param values"
   recovery_window_in_days = 0

@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "main" {
-  bucket = "${var.vpc_name}-${var.service_name}-${var.environment}"
+  bucket = "${var.vpc_name}-${var.service_name}"
   acl    = "private"
 
   versioning {
@@ -19,9 +19,9 @@ resource "aws_s3_bucket" "main" {
   }
 
   tags = {
-    Name        = "${var.vpc_name}-${var.service_name}-${var.environment}"
+    Name        = "${var.vpc_name}-${var.service_name}"
     Service     = var.service_name
-    Environment = var.environment
+    Environment = "prod"
     Terraform   = true
   }
 }
@@ -34,8 +34,8 @@ resource "aws_s3_bucket_public_access_block" "main" {
   ignore_public_acls      = true
 }
 
-resource "aws_s3_bucket_object" "github_webhook_forwarder" {
+resource "aws_s3_bucket_object" "main" {
   bucket = aws_s3_bucket.main.id
-  key    = "github_webhook_forwarder.zip"
-  source = var.github_webhook_forwarder_lambda_package_path
+  key    = "main.zip"
+  source = var.lambda_package_path
 }

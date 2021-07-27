@@ -1,10 +1,10 @@
 resource "aws_security_group" "ec2" {
-  name        = "ec2-${var.vpc_name}-${var.service_name}-${var.environment}"
+  name        = "ec2-${var.vpc_name}-${var.service_name}"
   description = "security group attached to the jenkins ec2 instances."
   vpc_id      = var.vpc_id
 
   tags = {
-    Name        = "ec2-${var.vpc_name}-${var.service_name}-${var.environment}"
+    Name        = "ec2-${var.vpc_name}-${var.service_name}"
     Service     = var.service_name
     Environment = "prod"
     Terraform   = true
@@ -39,12 +39,12 @@ resource "aws_security_group_rule" "ec2_in_8080_lb" {
 }
 
 resource "aws_security_group" "lb" {
-  name        = "lb-${var.vpc_name}-${var.service_name}-${var.environment}"
+  name        = "lb-${var.vpc_name}-${var.service_name}"
   description = "security group attached to the lb"
   vpc_id      = var.vpc_id
 
   tags = {
-    Name        = "lb-${var.vpc_name}-${var.service_name}-${var.environment}"
+    Name        = "lb-${var.vpc_name}-${var.service_name}"
     Service     = var.service_name
     Environment = "prod"
     Terraform   = true

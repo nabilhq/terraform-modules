@@ -80,17 +80,42 @@ variable prod_private_key_ssh {
 
 variable prod_ec2_instance_size {
   type        = string
-  description = "size of the ec2 instance"
+  description = "size of the prod ec2 instance"
 }
 
 variable prod_ec2_root_volume_size {
   type        = string
-  description = "size of the ec2 instance root block device"
+  description = "size of the prod ec2 instance root block device"
 }
 
 variable prod_ec2_root_volume_type {
   type        = string
-  description = "device type of the ec2 instance root block device"
+  description = "device type of the prod ec2 instance root block device"
+}
+
+variable staging_public_key_ssh {
+  type        = string
+  description = "public key to add to the staging ec2"
+}
+
+variable staging_private_key_ssh {
+  type        = string
+  description = "private key to use to ssh to the staging ec2 instance"
+}
+
+variable staging_ec2_instance_size {
+  type        = string
+  description = "size of the staging ec2 instance"
+}
+
+variable staging_ec2_root_volume_size {
+  type        = string
+  description = "size of the staging ec2 instance root block device"
+}
+
+variable staging_ec2_root_volume_type {
+  type        = string
+  description = "device type of the staging ec2 instance root block device"
 }
 
 variable admin_email {
