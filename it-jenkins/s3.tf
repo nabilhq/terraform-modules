@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "main" {
-  bucket = "${var.vpc_name}-${var.service_name}"
+  bucket = "${var.vpc_name}-${var.service_name}-resources"
   acl    = "private"
 
   versioning {
@@ -19,10 +19,9 @@ resource "aws_s3_bucket" "main" {
   }
 
   tags = {
-    Name        = "${var.vpc_name}-${var.service_name}"
-    Service     = var.service_name
-    Environment = "prod"
-    Terraform   = true
+    Name      = "${var.vpc_name}-${var.service_name}"
+    Service   = var.service_name
+    Terraform = true
   }
 }
 
@@ -34,8 +33,16 @@ resource "aws_s3_bucket_public_access_block" "main" {
   ignore_public_acls      = true
 }
 
-resource "aws_s3_bucket_object" "main" {
-  bucket = aws_s3_bucket.main.id
-  key    = "main.zip"
-  source = var.lambda_package_path
+resource "aws_s3_bucket_object" "job_resources_prod" {
+    bucket = aws_s3_bucket.main.id
+    acl    = "private"
+    key    = "job_resources_prod/"
+    source = "/dev/null"
+}
+
+resource "aws_s3_bucket_object" "job_resources_staging" {
+    bucket = aws_s3_bucket.main.id
+    acl    = "private"
+    key    = "job_resources_staging/"
+    source = "/dev/null"
 }

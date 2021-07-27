@@ -1,3 +1,8 @@
+variable "aws_region" {
+  type        = string
+  description = "aws region to deploy the lambda to"
+}
+
 variable lambda_vpc_access_arn {
   type        = string
   description = "aws lambda vpc access iam policy arn."
@@ -18,11 +23,6 @@ variable service_name {
   description = "service tag to assign to all of the tagable resources being created"
 }
 
-variable environment {
-  type        = string
-  description = "environment the resources will be used in"
-}
-
 variable api_gw_stage_name {
   type        = string
   description = "api gateway deployment stage name"
@@ -38,7 +38,7 @@ variable priv_subnet_b_id {
   description = "id of the secondary private subnet"
 }
 
-variable github_webhook_forwarder_lambda_package_path {
+variable lambda_package_path {
   type        = string
   description = "path to the lambda package"
 }
@@ -46,4 +46,19 @@ variable github_webhook_forwarder_lambda_package_path {
 variable jenkins_source_sg_id {
   type        = string
   description = "jenkins security group id"
+}
+
+variable "jenkins_api_token" {
+  type        = string
+  description = "jenkins api token"
+}
+
+variable "jenkins_api_username" {
+  type        = string
+  description = "jenkins api user"
+}
+
+variable "jenkins_build_verification_token" {
+  type        = string
+  description = "jenkins build trigger verification token"
 }
