@@ -1,48 +1,48 @@
-resource "aws_key_pair" "ec2" {
-  key_name   = "ec2-${var.vpc_name}-${var.service_name}-${var.environment}"
+resource "aws_key_pair" "ec2_prod" {
+  key_name   = "ec2-${var.vpc_name}-${var.service_name}-prod"
   public_key = var.public_key_ssh
 
   tags = {
-    Name        = "ec2-${var.vpc_name}-${var.service_name}-${var.environment}"
+    Name        = "ec2-${var.vpc_name}-${var.service_name}-prod"
     Service     = var.service_name
-    Environment = var.environment
+    Environment = "prod"
     Terraform   = true
   }
 }
 
-resource "aws_instance" "ec2" {
+resource "aws_instance" "ec2_prod" {
   ami                    = var.ami_id
-  instance_type          = var.ec2_instance_size
-  key_name               = aws_key_pair.ec2.key_name
+  instance_type          = var.prod_ec2_instance_size
+  key_name               = aws_key_pair.ec2_prod.key_name
   vpc_security_group_ids = [aws_security_group.ec2.id]
   subnet_id              = var.priv_subnet_a_id
   availability_zone      = var.availability_zone
   iam_instance_profile   = aws_iam_instance_profile.ec2.name
 
   root_block_device {
-    volume_type           = var.ec2_root_volume_type
-    volume_size           = var.ec2_root_volume_size
+    volume_type           = var.prod_ec2_root_volume_type
+    volume_size           = var.prod_ec2_root_volume_size
     delete_on_termination = true
   }
 
   tags = {
-    Name        = "${var.vpc_name}-${var.service_name}-${var.environment}"
+    Name        = "${var.vpc_name}-${var.service_name}-prod"
     Service     = var.service_name
-    Environment = var.environment
+    Environment = "prod"
     Terraform   = true
   }
 }
 
-resource "null_resource" "ec2" {
+resource "null_resource" "ec2_prod" {
   triggers = {
-    subdomain_id = "${aws_route53_record.lb.id}"
+    subdomain_id = "${aws_route53_record.lb_prod.id}"
   }
 
   connection {
     type        = "ssh"
     user        = "ubuntu"
-    host        = aws_instance.ec2.private_ip
-    private_key = var.private_key_ssh
+    host        = aws_instance.ec2_prod.private_ip
+    private_key = var.prod_private_key_ssh
   }
 
   provisioner "file" {
@@ -77,6 +77,15 @@ resource "null_resource" "ec2" {
       "unzip /home/ubuntu/awscliv2.zip",
       "sudo /home/ubuntu/aws/install",
       "rm /home/ubuntu/awscliv2.zip",
+      "echo INSTALLING - powershell",
+      "sudo apt-get update",
+      "sudo apt-get install -y wget apt-transport-https software-properties-common",
+      "wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb",
+      "sudo dpkg -i packages-microsoft-prod.deb",
+      "sudo apt-get update",
+      "sudo add-apt-repository universe",
+      "sudo apt-get install -y powershell",
+      "sudo ln -s /usr/bin/pwsh /usr/bin/powershell",
       "echo ADDING JENKINS REPOS",
       "wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -",
       "sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'",
@@ -103,15 +112,23 @@ resource "null_resource" "ec2" {
       "echo UPDATING - jenkins.yaml",
       "sudo sed -i 's/{serviceName}/${var.service_name}/g;' /var/lib/jenkins/jenkins.yaml",
       "sudo sed -i 's/{domain}/${var.domain}/g;' /var/lib/jenkins/jenkins.yaml",
-      "sudo sed -i 's/{environment}/${var.environment}/g;' /var/lib/jenkins/jenkins.yaml",
       "sudo sed -i 's/{adminUsername}/${var.admin_username}/g;' /var/lib/jenkins/jenkins.yaml",
       "sudo sed -i 's/{adminEmail}/${var.admin_email}/g;' /var/lib/jenkins/jenkins.yaml",
       "sudo sed -i 's/{gitAccount}/${var.github_account}/g' /var/lib/jenkins/jenkins.yaml",
       "sudo sed -i 's/{gitRepo}/${var.github_repo}/g' /var/lib/jenkins/jenkins.yaml",
+      "sudo sed -i 's/{githubBranch}/${var.github_branch_prod}/g' /var/lib/jenkins/jenkins.yaml",
+      "sudo sed -i 's/{awsRegion}/${var.aws_region}/g' /var/lib/jenkins/jenkins.yaml",
       "echo CHANGING PERMISSIONS - jenkins.yaml",
       "sudo chown jenkins:jenkins /var/lib/jenkins/jenkins.yaml",
       "echo RESTARTING SERVICE - jenkins",
       "sudo service jenkins restart",
+      "echo MOUNTING S3 BUCKET",
+      "sudo apt-get install automake autotools-dev fuse g++ git libcurl4-gnutls-dev libfuse-dev libssl-dev libxml2-dev make pkg-config -y",
+      "git clone https://github.com/s3fs-fuse/s3fs-fuse.git",
+      "cd s3fs-fuse && ./autogen.sh && ./configure --prefix=/usr --with-openssl",
+      "make",
+      "sudo make install",
+      "sudo mkdir -p /${var.vpc_name}-${var.service_name}-resources",
       "echo CLEANING UP",
       "rm -rf /home/ubuntu/init.groovy",
       "rm -rf /home/ubuntu/plugins.yaml"

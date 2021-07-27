@@ -91,3 +91,34 @@ resource "aws_iam_role_policy_attachment" "sm_read_write_tagged" {
   role       = aws_iam_role.ec2.name
   policy_arn = aws_iam_policy.sm_read_write_tagged.arn
 }
+
+resource "aws_iam_policy" "s3_main_rw" {
+  name        = "s3-${var.vpc_name}-${var.service_name}-main-rw"
+  path        = "/"
+  description = "grants ${var.service_name} ec2 read/write access to the ${aws_s3_bucket.main.id} s3 bucket"
+
+  policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "s3:GetObject",
+        "s3:PutObject",
+        "s3:ListBucket"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "${aws_s3_bucket.main.arn}",
+        "${aws_s3_bucket.main.arn}/*"
+      ]
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_iam_role_policy_attachment" "main" {
+  role       = "${aws_iam_role.ec2.name}"
+  policy_arn = "${aws_iam_policy.s3_main_rw.arn}"
+}

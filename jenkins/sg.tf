@@ -6,7 +6,7 @@ resource "aws_security_group" "ec2" {
   tags = {
     Name        = "ec2-${var.vpc_name}-${var.service_name}-${var.environment}"
     Service     = var.service_name
-    Environment = var.environment
+    Environment = "prod"
     Terraform   = true
   }
 }
@@ -25,7 +25,7 @@ resource "aws_security_group_rule" "ec2_in_22" {
   from_port         = 22
   to_port           = 22
   protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"]
+  cidr_blocks       = [var.ssh_source]
   security_group_id = aws_security_group.ec2.id
 }
 
@@ -46,7 +46,7 @@ resource "aws_security_group" "lb" {
   tags = {
     Name        = "lb-${var.vpc_name}-${var.service_name}-${var.environment}"
     Service     = var.service_name
-    Environment = var.environment
+    Environment = "prod"
     Terraform   = true
   }
 }

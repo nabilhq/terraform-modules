@@ -28,11 +28,6 @@ variable service_name {
   description = "name this jenkins service"
 }
 
-variable environment {
-  type        = string
-  description = "working environment"
-}
-
 variable main_domain_zone_id {
   type        = string
   description = "id of the main domain zone id"
@@ -45,12 +40,12 @@ variable domain {
 
 variable ssh_source {
   type        = string
-  description = "source network address to allow ssh to main jenkins ec"
+  description = "source network address to allow ssh to jenkins ec2"
 }
 
 variable web_source {
   type        = string
-  description = "source network address to allow 443 to main jenkins ec2"
+  description = "source network address to allow 443 to jenkins ec2"
 }
 
 variable priv_subnet_a_id {
@@ -73,27 +68,27 @@ variable ami_id {
   description = "id of the ami to deploy."
 }
 
-variable public_key_ssh {
+variable prod_public_key_ssh {
   type        = string
-  description = "public key to add main ec2"
+  description = "public key to add to the prod ec2"
 }
 
-variable private_key_ssh {
+variable prod_private_key_ssh {
   type        = string
-  description = "private key to use to ssh to the main ec2 instance"
+  description = "private key to use to ssh to the prod ec2 instance"
 }
 
-variable ec2_instance_size {
+variable prod_ec2_instance_size {
   type        = string
   description = "size of the ec2 instance"
 }
 
-variable ec2_root_volume_size {
+variable prod_ec2_root_volume_size {
   type        = string
   description = "size of the ec2 instance root block device"
 }
 
-variable ec2_root_volume_type {
+variable prod_ec2_root_volume_type {
   type        = string
   description = "device type of the ec2 instance root block device"
 }
@@ -138,6 +133,16 @@ variable github_repo {
 variable github_account {
   type        = string
   description = "github account to use for the jenkins.yaml config"
+}
+
+variable github_branch_prod {
+  type        = string
+  description = "name of the branch to use for the prod jenkins instance"
+}
+
+variable github_branch_staging {
+  type        = string
+  description = "name of the branch to use for the staging jenkins instance"
 }
 
 variable jenkins_yaml_config_path {

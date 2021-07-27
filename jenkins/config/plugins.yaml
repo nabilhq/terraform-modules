@@ -131,6 +131,12 @@ plugins:
   - artifactId: durable-task
     source:
       version: latest
+  - artifactId: powershell
+    source:
+      version: latest
+  - artifactId: pipeline-aws
+    source:
+      version: latest
   - artifactId: pipeline-graph-analysis
     source:
       version: latest
