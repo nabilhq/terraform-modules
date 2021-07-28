@@ -118,7 +118,7 @@ resource "null_resource" "ec2_prod" {
       "sudo sed -i 's/{gitAccount}/${var.github_account}/g' /var/lib/jenkins/jenkins.yaml",
       "sudo sed -i 's/{gitRepo}/${var.github_repo}/g' /var/lib/jenkins/jenkins.yaml",
       "sudo sed -i 's/{githubBranch}/${var.github_branch_prod}/g' /var/lib/jenkins/jenkins.yaml",
-      "sudo sed -i 's/{aws_region}/${var.aws_region}/g' /var/lib/jenkins/jenkins.yaml",
+      "sudo sed -i 's/{awsRegion}/${var.aws_region}/g' /var/lib/jenkins/jenkins.yaml",
       "echo CHANGING PERMISSIONS - jenkins.yaml",
       "sudo chown jenkins:jenkins /var/lib/jenkins/jenkins.yaml",
       "echo RESTARTING SERVICE - jenkins",
@@ -129,18 +129,21 @@ resource "null_resource" "ec2_prod" {
       "cd s3fs-fuse && ./autogen.sh && ./configure --prefix=/usr --with-openssl",
       "make",
       "sudo make install",
-      "sudo mkdir -p /${var.vpc_name}-${var.service_name}-resources",
+      "sudo mkdir -p /${aws_s3_bucket.main.id}",
+      "sudo chmod -R 775 /${aws_s3_bucket.main.id}",
+      "sudo s3fs ${aws_s3_bucket.main.id} -o iam_role='${aws_iam_role.ec2.name}' -o url='https://s3.${var.aws_region}.amazonaws.com' -o endpoint=${var.aws_region} -o dbglevel=info -o curldbg -o use_cache=/tmp -o allow_other /${aws_s3_bucket.main.id}",
       "echo CLEANING UP",
       "rm -rf /home/ubuntu/init.groovy",
       "rm -rf /home/ubuntu/plugins.yaml",
       "rm /home/ubuntu/packages-microsoft-prod.deb",
       "rm /home/ubuntu/jenkins-plugin-manager-2.9.0.jar",
+      "rm -rf s3fs-fuse",
       "echo RESTARTING",
-      "sudo reboot"    
+      "sudo reboot"
     ]
   }
 }
-
+/*
 resource "aws_key_pair" "ec2_staging" {
   key_name   = "ec2-${var.vpc_name}-${var.service_name}-staging"
   public_key = var.staging_public_key_ssh
@@ -273,6 +276,9 @@ resource "null_resource" "ec2_staging" {
       "cd s3fs-fuse && ./autogen.sh && ./configure --prefix=/usr --with-openssl",
       "make",
       "sudo make install",
+      "sudo mkdir -p /${aws_s3_bucket.main.id}",
+      "sudo chmod -R 775 /${aws_s3_bucket.main.id}",
+      "sudo s3fs ${aws_s3_bucket.main.id} -o iam_role='${aws_iam_role.ec2.name}' -o url='https://s3.${var.aws_region}.amazonaws.com' -o endpoint=${var.aws_region} -o dbglevel=info -o curldbg -o use_cache=/tmp -o allow_other /${aws_s3_bucket.main.id}",
       "sudo mkdir -p /${var.vpc_name}-${var.service_name}-resources",
       "echo CLEANING UP",
       "rm -rf /home/ubuntu/init.groovy",
@@ -283,4 +289,4 @@ resource "null_resource" "ec2_staging" {
       "sudo reboot"
     ]
   }
-}
+}*/

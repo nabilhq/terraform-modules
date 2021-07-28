@@ -34,15 +34,15 @@ resource "aws_s3_bucket_public_access_block" "main" {
 }
 
 resource "aws_s3_bucket_object" "job_resources_prod" {
-    bucket = aws_s3_bucket.main.id
-    acl    = "private"
-    key    = "job_resources_prod/"
-    source = "/dev/null"
+  bucket = aws_s3_bucket.main.id
+  acl    = "private"
+  key    = "job_resources_prod/"
+  source = "/dev/null"
 }
 
 resource "aws_s3_bucket_object" "job_resources_staging" {
-    bucket = aws_s3_bucket.main.id
-    acl    = "private"
-    key    = "job_resources_staging/"
-    source = "/dev/null"
+  bucket = aws_s3_bucket.main.id
+  acl    = "private"
+  key    = "job_resources_staging/"
+  source = "/dev/null"
 }

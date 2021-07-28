@@ -2,10 +2,10 @@ resource "aws_lambda_function" "main" {
   function_name = "${var.vpc_name}-${var.service_name}"
   description   = "forwards api requests from api gw to jenkins ec2 instance"
   s3_bucket     = aws_s3_bucket.main.id
-  s3_key        = aws_s3_bucket_object.github_webhook_forwarder.key
+  s3_key        = aws_s3_bucket_object.main.key
   handler       = "main.lambda_handler"
   runtime       = "python3.7"
-  role          = aws_iam_role.github_webhook_forwarder.arn
+  role          = aws_iam_role.main.arn
 
   vpc_config {
     subnet_ids         = [var.priv_subnet_a_id, var.priv_subnet_b_id]

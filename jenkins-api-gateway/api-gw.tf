@@ -23,7 +23,7 @@ resource "aws_api_gateway_method" "github_webhook_forwarder" {
   authorization = "NONE"
 
   request_parameters = {
-    "method.request.querystring.hostname" = true
+    "method.request.querystring.jenkins_host" = true
   }
 }
 
