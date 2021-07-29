@@ -48,6 +48,7 @@ resource "aws_secretsmanager_secret_version" "jenkins_yaml_config_params_prod" {
   "gitAccount":"${var.github_account}",
   "gitRepo":"${var.github_repo}",
   "gitBranch":"${var.github_branch_prod}",
+  "s3ExportDirectory":"/${aws_s3_bucket.main.id}/",
   "awsRegion":"${var.aws_region}"
 }
 SECRET
@@ -79,6 +80,7 @@ resource "aws_secretsmanager_secret_version" "jenkins_yaml_config_params_staging
   "gitAccount":"${var.github_account}",
   "gitRepo":"${var.github_repo}",
   "gitBranch":"${var.github_branch_staging}",
+  "s3ExportPath":"/${aws_s3_bucket.main.id}/",
   "awsRegion":"${var.aws_region}"
 }
 SECRET

@@ -32,17 +32,3 @@ resource "aws_s3_bucket_public_access_block" "main" {
   restrict_public_buckets = true
   ignore_public_acls      = true
 }
-
-resource "aws_s3_bucket_object" "job_resources_prod" {
-  bucket = aws_s3_bucket.main.id
-  acl    = "private"
-  key    = "job_resources_prod/"
-  source = "/dev/null"
-}
-
-resource "aws_s3_bucket_object" "job_resources_staging" {
-  bucket = aws_s3_bucket.main.id
-  acl    = "private"
-  key    = "job_resources_staging/"
-  source = "/dev/null"
-}

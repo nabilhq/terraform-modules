@@ -110,15 +110,16 @@ resource "null_resource" "ec2_prod" {
       "echo MOVING - jenkins.yaml",
       "sudo mv /home/ubuntu/jenkins.yaml /var/lib/jenkins/jenkins.yaml",
       "echo UPDATING - jenkins.yaml",
-      "sudo sed -i 's/{hostname}/${var.service_name}/g;' /var/lib/jenkins/jenkins.yaml",
-      "sudo sed -i 's/{serviceName}/${var.service_name}/g;' /var/lib/jenkins/jenkins.yaml",
-      "sudo sed -i 's/{domain}/${var.domain}/g;' /var/lib/jenkins/jenkins.yaml",
-      "sudo sed -i 's/{adminUsername}/${var.admin_username}/g;' /var/lib/jenkins/jenkins.yaml",
-      "sudo sed -i 's/{adminEmail}/${var.admin_email}/g;' /var/lib/jenkins/jenkins.yaml",
-      "sudo sed -i 's/{gitAccount}/${var.github_account}/g' /var/lib/jenkins/jenkins.yaml",
-      "sudo sed -i 's/{gitRepo}/${var.github_repo}/g' /var/lib/jenkins/jenkins.yaml",
-      "sudo sed -i 's/{githubBranch}/${var.github_branch_prod}/g' /var/lib/jenkins/jenkins.yaml",
-      "sudo sed -i 's/{awsRegion}/${var.aws_region}/g' /var/lib/jenkins/jenkins.yaml",
+      "sudo sed -i 's#{hostname}#${var.service_name}#g;' /var/lib/jenkins/jenkins.yaml",
+      "sudo sed -i 's#{serviceName}#${var.service_name}#g;' /var/lib/jenkins/jenkins.yaml",
+      "sudo sed -i 's#{domain}#${var.domain}#g;' /var/lib/jenkins/jenkins.yaml",
+      "sudo sed -i 's#{adminUsername}#${var.admin_username}#g;' /var/lib/jenkins/jenkins.yaml",
+      "sudo sed -i 's#{adminEmail}#${var.admin_email}#g;' /var/lib/jenkins/jenkins.yaml",
+      "sudo sed -i 's#{gitAccount}#${var.github_account}#g' /var/lib/jenkins/jenkins.yaml",
+      "sudo sed -i 's#{gitRepo}#${var.github_repo}#g' /var/lib/jenkins/jenkins.yaml",
+      "sudo sed -i 's#{githubBranch}#${var.github_branch_prod}#g' /var/lib/jenkins/jenkins.yaml",
+      "sudo sed -i 's#{s3ExportDirectory}#${aws_s3_bucket.main.id}/#g' /var/lib/jenkins/jenkins.yaml",
+      "sudo sed -i 's#{awsRegion}#${var.aws_region}#g' /var/lib/jenkins/jenkins.yaml",
       "echo CHANGING PERMISSIONS - jenkins.yaml",
       "sudo chown jenkins:jenkins /var/lib/jenkins/jenkins.yaml",
       "echo RESTARTING SERVICE - jenkins",
@@ -131,7 +132,8 @@ resource "null_resource" "ec2_prod" {
       "sudo make install",
       "sudo mkdir -p /${aws_s3_bucket.main.id}",
       "sudo chmod -R 775 /${aws_s3_bucket.main.id}",
-      "sudo s3fs ${aws_s3_bucket.main.id} -o iam_role='${aws_iam_role.ec2.name}' -o url='https://s3.${var.aws_region}.amazonaws.com' -o endpoint=${var.aws_region} -o dbglevel=info -o curldbg -o use_cache=/tmp -o allow_other /${aws_s3_bucket.main.id}",
+      "sudo chown jenkins:jenkins -R /${aws_s3_bucket.main.id}/*",
+      "echo \"s3fs#${aws_s3_bucket.main.id} /${aws_s3_bucket.main.id} fuse _netdev,allow_other,nonempty,iam_role=${aws_iam_role.ec2.name},endpoint=${var.aws_region},url=http://s3.${var.aws_region}.amazonaws.com 0 0\" | sudo tee -a /etc/fstab",
       "echo CLEANING UP",
       "rm -rf /home/ubuntu/init.groovy",
       "rm -rf /home/ubuntu/plugins.yaml",
@@ -139,10 +141,11 @@ resource "null_resource" "ec2_prod" {
       "rm /home/ubuntu/jenkins-plugin-manager-2.9.0.jar",
       "rm -rf s3fs-fuse",
       "echo RESTARTING",
-      "sudo reboot"
+      "sudo shutdown -r +0"
     ]
   }
 }
+
 /*
 resource "aws_key_pair" "ec2_staging" {
   key_name   = "ec2-${var.vpc_name}-${var.service_name}-staging"
@@ -257,15 +260,16 @@ resource "null_resource" "ec2_staging" {
       "echo MOVING - jenkins.yaml",
       "sudo mv /home/ubuntu/jenkins.yaml /var/lib/jenkins/jenkins.yaml",
       "echo UPDATING - jenkins.yaml",
-      "sudo sed -i 's/{hostname}/${var.service_name}-staging/g;' /var/lib/jenkins/jenkins.yaml",
-      "sudo sed -i 's/{serviceName}/${var.service_name}/g;' /var/lib/jenkins/jenkins.yaml",
-      "sudo sed -i 's/{domain}/${var.domain}/g;' /var/lib/jenkins/jenkins.yaml",
-      "sudo sed -i 's/{adminUsername}/${var.admin_username}/g;' /var/lib/jenkins/jenkins.yaml",
-      "sudo sed -i 's/{adminEmail}/${var.admin_email}/g;' /var/lib/jenkins/jenkins.yaml",
-      "sudo sed -i 's/{gitAccount}/${var.github_account}/g' /var/lib/jenkins/jenkins.yaml",
-      "sudo sed -i 's/{gitRepo}/${var.github_repo}/g' /var/lib/jenkins/jenkins.yaml",
-      "sudo sed -i 's/{githubBranch}/${var.github_branch_staging}/g' /var/lib/jenkins/jenkins.yaml",
-      "sudo sed -i 's/{aws_region}/${var.aws_region}/g' /var/lib/jenkins/jenkins.yaml",
+      "sudo sed -i 's#{hostname}#${var.service_name}-staging#g;' /var/lib/jenkins/jenkins.yaml",
+      "sudo sed -i 's#{serviceName}#${var.service_name}#g;' /var/lib/jenkins/jenkins.yaml",
+      "sudo sed -i 's#{domain}#${var.domain}#g;' /var/lib/jenkins/jenkins.yaml",
+      "sudo sed -i 's#{adminUsername}#${var.admin_username}#g;' /var/lib/jenkins/jenkins.yaml",
+      "sudo sed -i 's#{adminEmail}#${var.admin_email}#g;' /var/lib/jenkins/jenkins.yaml",
+      "sudo sed -i 's#{gitAccount}#${var.github_account}#g' /var/lib/jenkins/jenkins.yaml",
+      "sudo sed -i 's#{gitRepo}#${var.github_repo}#g' /var/lib/jenkins/jenkins.yaml",
+      "sudo sed -i 's#{githubBranch}#${var.github_branch_staging}#g' /var/lib/jenkins/jenkins.yaml",
+      "sudo sed -i 's#{s3ExportDirectory}#${aws_s3_bucket.main.id}/#g' /var/lib/jenkins/jenkins.yaml",
+      "sudo sed -i 's#{awsRegion}#${var.aws_region}#g' /var/lib/jenkins/jenkins.yaml",
       "echo CHANGING PERMISSIONS - jenkins.yaml",
       "sudo chown jenkins:jenkins /var/lib/jenkins/jenkins.yaml",
       "echo RESTARTING SERVICE - jenkins",
@@ -278,15 +282,16 @@ resource "null_resource" "ec2_staging" {
       "sudo make install",
       "sudo mkdir -p /${aws_s3_bucket.main.id}",
       "sudo chmod -R 775 /${aws_s3_bucket.main.id}",
-      "sudo s3fs ${aws_s3_bucket.main.id} -o iam_role='${aws_iam_role.ec2.name}' -o url='https://s3.${var.aws_region}.amazonaws.com' -o endpoint=${var.aws_region} -o dbglevel=info -o curldbg -o use_cache=/tmp -o allow_other /${aws_s3_bucket.main.id}",
-      "sudo mkdir -p /${var.vpc_name}-${var.service_name}-resources",
+      "sudo chown jenkins:jenkins -R /${aws_s3_bucket.main.id}/*",
+      "echo \"s3fs#${aws_s3_bucket.main.id} /${aws_s3_bucket.main.id} fuse _netdev,allow_other,nonempty,iam_role=${aws_iam_role.ec2.name},endpoint=${var.aws_region},url=http://s3.${var.aws_region}.amazonaws.com 0 0\" | sudo tee -a /etc/fstab",
       "echo CLEANING UP",
       "rm -rf /home/ubuntu/init.groovy",
       "rm -rf /home/ubuntu/plugins.yaml",
       "rm /home/ubuntu/packages-microsoft-prod.deb",
       "rm /home/ubuntu/jenkins-plugin-manager-2.9.0.jar",
+      "rm -rf s3fs-fuse",
       "echo RESTARTING",
-      "sudo reboot"
+      "sudo shutdown -r +0"
     ]
   }
 }*/
