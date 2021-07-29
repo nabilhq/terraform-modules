@@ -62,7 +62,7 @@ resource "aws_secretsmanager_secret" "jenkins_yaml_config_params_staging" {
   tags = {
     Name        = "${var.service_name}-jenkins-yaml-config-params-staging"
     Service     = var.service_name
-    Environment = "prod"
+    Environment = "staging"
     Terraform   = true
   }
 }
