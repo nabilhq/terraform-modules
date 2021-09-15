@@ -4,7 +4,7 @@ resource "aws_security_group" "main" {
   vpc_id      = var.vpc_id
 
   tags = {
-    Name        = "${var.vpc_name}-${var.service_name}"
+    Name        = "lambda-${var.vpc_name}-${var.service_name}"
     Service     = var.service_name
     Environment = "prod"
     Terraform   = true
