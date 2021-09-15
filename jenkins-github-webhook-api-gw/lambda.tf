@@ -21,7 +21,7 @@ resource "aws_lambda_function" "github_webhook" {
   environment {
     variables = {
       github_webhook_secret_name = var.github_webhook_secret_name
-      aws_region                   = var.aws_region
+      aws_region                 = var.aws_region
     }
   }
 

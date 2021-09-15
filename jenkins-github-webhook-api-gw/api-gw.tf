@@ -121,7 +121,7 @@ resource "aws_api_gateway_authorizer" "github_webhook" {
 }
 
 resource "aws_api_gateway_api_key" "github_webhook" {
-  name        = "${var.service_name}"
+  name        = var.service_name
   value       = var.github_webhook_verification_token
   description = "api key used by github webhook api endpoint to verify webhooks"
   enabled     = true
@@ -140,9 +140,9 @@ resource "aws_api_gateway_resource" "github_webhook" {
 }
 
 resource "aws_api_gateway_method" "github_webhook" {
-  rest_api_id   = aws_api_gateway_rest_api.main.id
-  resource_id   = aws_api_gateway_resource.github_webhook.id
-  http_method   = "POST"
+  rest_api_id          = aws_api_gateway_rest_api.main.id
+  resource_id          = aws_api_gateway_resource.github_webhook.id
+  http_method          = "POST"
   authorization        = "CUSTOM"
   authorizer_id        = aws_api_gateway_authorizer.github_webhook.id
   request_validator_id = aws_api_gateway_request_validator.request_params.id

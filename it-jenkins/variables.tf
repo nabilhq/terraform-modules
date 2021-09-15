@@ -206,6 +206,6 @@ variable "prod_ol_manage_all_client_secret" {
 }
 
 variable "prod_okta_api_token" {
-  type = string
+  type        = string
   description = "api token for the okta prod instance"
 }

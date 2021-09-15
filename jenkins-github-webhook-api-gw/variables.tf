@@ -60,7 +60,7 @@ variable "github_webhook_secret_name" {
 }
 
 variable "github_webhook_verification_token" {
-  type = string
+  type        = string
   description = "verification token to use as api token stored in query param from github"
 }
 

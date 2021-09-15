@@ -27,8 +27,8 @@ ROLE
 }
 
 resource "aws_iam_role_policy" "api_gw_authorizer" {
-  name        = "${var.service_name}-api-gw-authorizer"
-  role        = aws_iam_role.api_gw_main.id
+  name = "${var.service_name}-api-gw-authorizer"
+  role = aws_iam_role.api_gw_main.id
 
   policy = <<POLICY
 {
