@@ -9,6 +9,10 @@ output "prod_ec2_priv_ip" {
 output "prod_route53_record_fqdn" {
   value = aws_route53_record.lb_prod.fqdn
 }
+
+output "github_webhook_secret_arn" {
+  value = aws_secretsmanager_secret.github_webhook_shared_secret.arn
+}
 /*
 output "staging_route53_record_fqdn" {
   value = aws_route53_record.lb_staging.fqdn

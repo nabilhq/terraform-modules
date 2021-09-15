@@ -3,62 +3,123 @@ variable "aws_region" {
   description = "aws region to deploy the lambda to"
 }
 
-variable lambda_vpc_access_arn {
+variable "lambda_vpc_access_arn" {
   type        = string
   description = "aws lambda vpc access iam policy arn."
 }
 
-variable vpc_id {
+variable "vpc_id" {
   type        = string
   description = "id of the vpc to deploy in"
 }
 
-variable vpc_name {
+variable "vpc_name" {
   type        = string
   description = "name of the vpc"
 }
 
-variable service_name {
+variable "service_name" {
   type        = string
   description = "service tag to assign to all of the tagable resources being created"
 }
 
-variable api_gw_stage_name {
+variable "main_domain_zone_id" {
   type        = string
-  description = "api gateway deployment stage name"
+  description = "id of the main domain zone"
 }
 
-variable priv_subnet_a_id {
+variable "domain" {
+  type        = string
+  description = "domain to use"
+}
+
+variable "api_gw_stage_name" {
+  type        = string
+  description = "api gateway deployment stage name"
+  default     = "prod"
+}
+
+variable "priv_subnet_a_id" {
   type        = string
   description = "id of the primary private subnet"
 }
 
-variable priv_subnet_b_id {
+variable "priv_subnet_b_id" {
   type        = string
   description = "id of the secondary private subnet"
 }
 
-variable lambda_package_path {
+variable "github_webhook_authorizer_lambda_package_path" {
   type        = string
-  description = "path to the lambda package"
+  description = "path to the lambda package for the github webhook authorizer"
 }
 
-variable jenkins_source_sg_id {
+variable "github_webhook_lambda_package_path" {
   type        = string
-  description = "jenkins security group id"
+  description = "path to the lambda for the github webhook lambda"
+}
+variable "github_webhook_verification_token" {
+  type        = string
+  description = "verification token for github webhook authorzation"
+}
+
+variable "github_webhook_secret_arn" {
+  type        = string
+  description = "arn for the secret used by github to sign webhooks"
+}
+
+variable "github_source_ips" {
+  type        = string
+  description = "source ip addresses to allow github webhooks from"
+  default     = "[\"192.30.252.0/22\",\"185.199.108.0/22\",\"140.82.112.0/20\",\"143.55.64.0/20\"]"
+}
+
+variable "api_quota_limit" {
+  type        = number
+  description = "api gateway quota limit setting"
+  default     = 50
+}
+
+variable "api_quota_period" {
+  type        = string
+  description = "api gateway quota period setting"
+  default     = "WEEK"
+}
+
+variable "api_throttle_burst_limit" {
+  type        = number
+  description = "api gateway throttle setting burst limit"
+  default     = 5
+}
+
+variable "api_throttle_rate_limit" {
+  type        = number
+  description = "api gateway throttle setting rate limit"
+  default     = 10
 }
 
 variable "jenkins_api_token" {
   type        = string
-  description = "jenkins api token"
+  description = "jenkins prod api token"
 }
 
 variable "jenkins_api_username" {
   type        = string
-  description = "jenkins api user"
+  description = "jenkins prod api user"
 }
 
-variable "jenkins_build_verification_token" {
+variable "jenkins_staging_api_token" {
   type        = string
-  description = "jenkins build trigger verification token"
+  description = "jenkins staging api token"
+}
+
+variable "jenkins_staging_api_username" {
+  type        = string
+  description = "jenkins staging api user"
+}
+
+variable "api_gw_tf_file_path" {
+  type        = string
+  description = "path to the api gw tf config file"
+  default     = "./api-gw.tf"
 }

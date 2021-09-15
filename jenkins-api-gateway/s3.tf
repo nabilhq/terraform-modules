@@ -34,8 +34,14 @@ resource "aws_s3_bucket_public_access_block" "main" {
   ignore_public_acls      = true
 }
 
-resource "aws_s3_bucket_object" "main" {
+resource "aws_s3_bucket_object" "github_webhook" {
   bucket = aws_s3_bucket.main.id
-  key    = "main.zip"
-  source = var.lambda_package_path
+  key    = "github_webhook.zip"
+  source = var.github_webhook_lambda_package_path
+}
+
+resource "aws_s3_bucket_object" "github_webhook_authorizer" {
+  bucket = aws_s3_bucket.main.id
+  key    = "github_webhook_authorizer.zip"
+  source = var.github_authorizer_lambda_package_path
 }
