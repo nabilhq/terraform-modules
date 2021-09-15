@@ -1,11 +1,11 @@
 resource "aws_lambda_function" "github_webhook" {
-  function_name = "${var.vpc_name}-${var.service_name}-github-webhook"
+  function_name = "${var.vpc_name}-${var.service_name}"
   description   = "forwards api requests from api gw to jenkins ec2 instance"
   s3_bucket     = aws_s3_bucket.main.id
   s3_key        = aws_s3_bucket_object.github_webhook.key
   handler       = "main.lambda_handler"
   runtime       = "python3.7"
-  role          = aws_iam_role.main.arn
+  role          = aws_iam_role.lambda_github_webhook.arn
 
   source_code_hash = filebase64sha256("${var.github_webhook_lambda_package_path}")
 
@@ -20,13 +20,13 @@ resource "aws_lambda_function" "github_webhook" {
 
   environment {
     variables = {
-      jenkins_it_api_secret_name = aws_secretsmanager_secret.jenkins_prod_api_credential.name
-      aws_region                 = var.aws_region
+      github_webhook_secret_name = var.github_webhook_secret_name
+      aws_region                   = var.aws_region
     }
   }
 
   tags = {
-    Name        = "${var.vpc_name}-${var.service_name}-github-webhook"
+    Name        = "${var.vpc_name}-${var.service_name}"
     Service     = var.service_name
     Environment = "prod"
     Terraform   = true
@@ -42,7 +42,7 @@ resource "aws_lambda_permission" "github_webhook" {
 }
 
 resource "aws_lambda_function" "github_webhook_api_gw_authorizer" {
-  function_name = "${var.vpc_name}-${var.service_name}-github-webhook-api-gw-authorizer"
+  function_name = "${var.vpc_name}-${var.service_name}-authorizer"
   description   = "authorizer for the github webhook api end point"
   s3_bucket     = aws_s3_bucket.main.id
   s3_key        = aws_s3_bucket_object.github_webhook_authorizer.key
@@ -63,7 +63,7 @@ resource "aws_lambda_function" "github_webhook_api_gw_authorizer" {
   }
 
   tags = {
-    Name        = "${var.vpc_name}-${var.service_name}-github-webhook-api-gw-authorizer"
+    Name        = "${var.vpc_name}-${var.service_name}-authorizer"
     Service     = var.service_name
     Environment = "prod"
     Terraform   = true

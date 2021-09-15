@@ -43,5 +43,5 @@ resource "aws_s3_bucket_object" "github_webhook" {
 resource "aws_s3_bucket_object" "github_webhook_authorizer" {
   bucket = aws_s3_bucket.main.id
   key    = "github_webhook_authorizer.zip"
-  source = var.github_authorizer_lambda_package_path
+  source = var.github_webhook_authorizer_lambda_package_path
 }

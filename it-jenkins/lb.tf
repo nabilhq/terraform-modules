@@ -54,7 +54,7 @@ resource "aws_lb_listener_certificate" "ec2_prod" {
   listener_arn    = aws_lb_listener.ec2_prod.arn
   certificate_arn = var.domain_wildcard_cert_id
 }
-/*
+
 resource "aws_lb_target_group" "ec2_staging" {
   name        = "ec2-${var.vpc_name}-${var.service_name}-staging"
   port        = 8080
@@ -110,4 +110,4 @@ resource "aws_lb_listener" "ec2_staging" {
 resource "aws_lb_listener_certificate" "ec2_staging" {
   listener_arn    = aws_lb_listener.ec2_staging.arn
   certificate_arn = var.domain_wildcard_cert_id
-}*/
+}

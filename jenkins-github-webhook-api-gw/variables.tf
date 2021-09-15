@@ -23,16 +23,6 @@ variable "service_name" {
   description = "service tag to assign to all of the tagable resources being created"
 }
 
-variable "main_domain_zone_id" {
-  type        = string
-  description = "id of the main domain zone"
-}
-
-variable "domain" {
-  type        = string
-  description = "domain to use"
-}
-
 variable "api_gw_stage_name" {
   type        = string
   description = "api gateway deployment stage name"
@@ -58,14 +48,20 @@ variable "github_webhook_lambda_package_path" {
   type        = string
   description = "path to the lambda for the github webhook lambda"
 }
-variable "github_webhook_verification_token" {
-  type        = string
-  description = "verification token for github webhook authorzation"
-}
 
 variable "github_webhook_secret_arn" {
   type        = string
   description = "arn for the secret used by github to sign webhooks"
+}
+
+variable "github_webhook_secret_name" {
+  type        = string
+  description = "name for the secret used by github to sign webhooks"
+}
+
+variable "github_webhook_verification_token" {
+  type = string
+  description = "verification token to use as api token stored in query param from github"
 }
 
 variable "github_source_ips" {
@@ -98,28 +94,7 @@ variable "api_throttle_rate_limit" {
   default     = 10
 }
 
-variable "jenkins_api_token" {
-  type        = string
-  description = "jenkins prod api token"
-}
-
-variable "jenkins_api_username" {
-  type        = string
-  description = "jenkins prod api user"
-}
-
-variable "jenkins_staging_api_token" {
-  type        = string
-  description = "jenkins staging api token"
-}
-
-variable "jenkins_staging_api_username" {
-  type        = string
-  description = "jenkins staging api user"
-}
-
 variable "api_gw_tf_file_path" {
   type        = string
   description = "path to the api gw tf config file"
-  default     = "./api-gw.tf"
 }

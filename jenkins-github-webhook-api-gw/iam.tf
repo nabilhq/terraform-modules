@@ -1,6 +1,6 @@
 resource "aws_iam_role" "api_gw_main" {
-  name        = "${var.vpn_name}-${var.service_name}-api-gw"
-  description = "role attached to the ${var.vpc_name}-${var.service_name} api gw"
+  name        = "api-gw-${var.vpc_name}-${var.service_name}"
+  description = "role attached to ${var.vpc_name}-${var.service_name}"
   path        = "/"
 
   assume_role_policy = <<ROLE
@@ -20,7 +20,7 @@ resource "aws_iam_role" "api_gw_main" {
 ROLE
 
   tags = {
-    Name      = "${var.vpn_name}-${var.service_name}-api-gw"
+    Name      = "${var.vpc_name}-${var.service_name}"
     Service   = var.service_name
     Terraform = true
   }
@@ -29,7 +29,6 @@ ROLE
 resource "aws_iam_role_policy" "api_gw_authorizer" {
   name        = "${var.service_name}-api-gw-authorizer"
   role        = aws_iam_role.api_gw_main.id
-  description = "grants api gateway access to invoke the authorizer lambda"
 
   policy = <<POLICY
 {
@@ -48,7 +47,7 @@ POLICY
 }
 
 resource "aws_iam_policy" "lambda_authorizer_cloudwatch" {
-  name        = "lambda-${var.vpn_name}-${var.service_name}-authorizer-cloudwatch"
+  name        = "lambda-${var.vpc_name}-${var.service_name}-authorizer-cloudwatch"
   path        = "/"
   description = "policy for logging from lambda authorizers"
 
@@ -70,8 +69,8 @@ EOF
 }
 
 resource "aws_iam_role" "lambda_github_webhook_authorizer" {
-  name        = "lambda-${var.vapn_name}-${var.service_name}-github-webhook-authorizer"
-  description = "role attached to the ${var.vpc_name}-${var.service_name}-github-webhook-api-gw-authorizer lambda"
+  name        = "lambda-${var.vpc_name}-${var.service_name}-authorizer"
+  description = "role attached to the ${var.vpc_name}-${var.service_name}-authorizer lambda"
   path        = "/"
 
   assume_role_policy = <<EOF
@@ -98,7 +97,7 @@ resource "aws_iam_role_policy_attachment" "lambda_github_webhook_authorizer" {
 
 resource "aws_iam_role" "lambda_github_webhook" {
   name        = "lambda-${var.vpc_name}-${var.service_name}"
-  description = "role attached to the ${var.vpc_name}-${var.service_name}-github-webhook lambda"
+  description = "role attached to the ${var.vpc_name}-${var.service_name} lambda"
   path        = "/"
 
   assume_role_policy = <<ROLE
@@ -118,7 +117,7 @@ resource "aws_iam_role" "lambda_github_webhook" {
 ROLE
 
   tags = {
-    Name        = "lambda-${var.vpc_name}-${var.service_name}-"
+    Name        = "lambda-${var.vpc_name}-${var.service_name}"
     Service     = var.service_name
     Environment = "prod"
     Terraform   = true
@@ -157,28 +156,4 @@ POLICY
 resource "aws_iam_role_policy_attachment" "github_webhook_secret" {
   role       = aws_iam_role.lambda_github_webhook.name
   policy_arn = aws_iam_policy.github_webhook_secret.arn
-}
-
-resource "aws_iam_policy" "jenkins_api_credential" {
-  name        = "sm-${aws_secretsmanager_secret.jenkins_prod_api_credential.name}-r"
-  path        = "/"
-  description = "grants read access to the ${aws_secretsmanager_secret.jenkins_prod_api_credential.name} secret"
-
-  policy = <<POLICY
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "VisualEditor0",
-            "Effect": "Allow",
-            "Action": [
-                "secretsmanager:GetSecretValue",
-                "secretsmanager:DescribeSecret",
-                "secretsmanager:ListSecretVersionIds"
-            ],
-            "Resource": "${aws_secretsmanager_secret.jenkins_prod_api_credential.arn}"
-        }
-    ]
-}
-POLICY
 }

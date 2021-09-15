@@ -144,26 +144,6 @@ resource "aws_secretsmanager_secret_version" "github_webhook_shared_secret" {
   secret_string = var.github_webhook_shared_secret
 }
 
-resource "aws_secretsmanager_secret" "prod_ol_read_client_creds" {
-  name                    = "${var.service_name}-prod-ol-api-client-creds-read"
-  description             = "onelogin prod api client credentials - read all"
-  recovery_window_in_days = 0
-
-  tags = {
-    Name                           = "${var.service_name}-prod-ol-api-client-creds-read"
-    Service                        = var.service_name
-    Environment                    = "prod"
-    Terraform                      = true
-    "jenkins:credentials:type"     = "usernamePassword"
-    "jenkins:credentials:username" = var.prod_ol_read_client_id
-  }
-}
-
-resource "aws_secretsmanager_secret_version" "prod_ol_read_client_creds" {
-  secret_id     = aws_secretsmanager_secret.prod_ol_read_client_creds.id
-  secret_string = var.prod_ol_read_client_secret
-}
-
 resource "aws_secretsmanager_secret" "prod_ol_manage_all_client_creds" {
   name                    = "${var.service_name}-prod-ol-api-client-creds-manage-all"
   description             = "onelogin prod api client credentials - manage all"
@@ -198,6 +178,26 @@ resource "aws_secretsmanager_secret" "prod_ol_manage_all_access_token" {
   }
 }
 
+resource "aws_secretsmanager_secret" "prod_ol_read_client_creds" {
+  name                    = "${var.service_name}-prod-ol-api-client-creds-read"
+  description             = "onelogin prod api client credentials - read all"
+  recovery_window_in_days = 0
+
+  tags = {
+    Name                           = "${var.service_name}-prod-ol-api-client-creds-read"
+    Service                        = var.service_name
+    Environment                    = "prod"
+    Terraform                      = true
+    "jenkins:credentials:type"     = "usernamePassword"
+    "jenkins:credentials:username" = var.prod_ol_read_client_id
+  }
+}
+
+resource "aws_secretsmanager_secret_version" "prod_ol_read_client_creds" {
+  secret_id     = aws_secretsmanager_secret.prod_ol_read_client_creds.id
+  secret_string = var.prod_ol_read_client_secret
+}
+
 resource "aws_secretsmanager_secret" "prod_ol_read_access_token" {
   name                    = "${var.service_name}-prod-ol-api-access-token-read"
   description             = "onelogin prod api access token - read"
@@ -210,4 +210,23 @@ resource "aws_secretsmanager_secret" "prod_ol_read_access_token" {
     Terraform                  = true
     "jenkins:credentials:type" = "string"
   }
+}
+
+resource "aws_secretsmanager_secret" "prod_okta_api_token" {
+  name                    = "${var.service_name}-prod-okta-api-token"
+  description             = "okta prod api access token"
+  recovery_window_in_days = 0
+
+  tags = {
+    Name                       = "${var.service_name}-prod-okta-api-token"
+    Service                    = var.service_name
+    Environment                = "prod"
+    Terraform                  = true
+    "jenkins:credentials:type" = "string"
+  }
+}
+
+resource "aws_secretsmanager_secret_version" "prod_okta_api_token" {
+  secret_id     = aws_secretsmanager_secret.prod_okta_api_token.id
+  secret_string = var.prod_okta_api_token
 }

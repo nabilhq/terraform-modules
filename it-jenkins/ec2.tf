@@ -146,7 +146,7 @@ resource "null_resource" "ec2_prod" {
   }
 }
 
-/*
+
 resource "aws_key_pair" "ec2_staging" {
   key_name   = "ec2-${var.vpc_name}-${var.service_name}-staging"
   public_key = var.staging_public_key_ssh
@@ -190,8 +190,8 @@ resource "null_resource" "ec2_staging" {
   connection {
     type        = "ssh"
     user        = "ubuntu"
-    host        = aws_instance.ec2_staging.public_ip
-    private_key = var.private_key_ssh_staging
+    host        = aws_instance.ec2_staging.private_ip
+    private_key = var.staging_private_key_ssh
     agent       = false
   }
 
@@ -294,4 +294,4 @@ resource "null_resource" "ec2_staging" {
       "sudo shutdown -r +0"
     ]
   }
-}*/
+}

@@ -38,11 +38,6 @@ variable "domain" {
   description = "domain to use"
 }
 
-variable "main_domain_wildcard_cert_validation_arn" {
-  type        = string
-  description = "wildcard certificate validation arn"
-}
-
 variable "ssh_source" {
   type        = string
   description = "source network address to allow ssh to jenkins ec2"
@@ -208,4 +203,9 @@ variable "prod_ol_manage_all_client_id" {
 variable "prod_ol_manage_all_client_secret" {
   type        = string
   description = "manage all client secret of the prod onelogin instance"
+}
+
+variable "prod_okta_api_token" {
+  type = string
+  description = "api token for the okta prod instance"
 }
